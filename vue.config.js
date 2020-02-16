@@ -1,6 +1,6 @@
 const path = require('path')
 module.exports = {
-  // 基本路径
+  // 基本路径 //test pull
   publicPath: process.env.NODE_ENV === 'production' ? '' : '/',
   // 输出文件目录
   outputDir: process.env.NODE_ENV === 'production' ? 'dist' : 'devdist',
