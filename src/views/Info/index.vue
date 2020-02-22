@@ -89,7 +89,7 @@
       style="width: 100%"
     >
       <el-table-column type="selection" width="45"></el-table-column>
-      <el-table-column prop="title" label="标题" width="830"></el-table-column>
+      <el-table-column prop="title" label="标题" width="230"></el-table-column>
       <el-table-column
         prop="categoryId"
         label="类型"
@@ -126,7 +126,7 @@
           background
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :page-sizes="[10, 20, 50, 100]"
+          :page-sizes="[2, 4, 6, 8]"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"
         >
@@ -134,7 +134,11 @@
       </el-col>
     </el-row>
     <!--新增弹窗-->
-    <DialogInfo :flag.sync="dialog_info" :category="options.category" />
+    <DialogInfo
+      :flag.sync="dialog_info"
+      :category="options.category"
+      @close="closeDialog"
+    />
     <!--修必弹窗-->
     <DialogEditInfo
       :flag.sync="dialog_info_edit"
@@ -182,7 +186,7 @@ export default {
     // 页码
     const page = reactive({
       pageNumber: 1,
-      pageSize: 10
+      pageSize: 2
     });
     // 表格数据
     const table_data = reactive({
@@ -247,6 +251,19 @@ export default {
         });
     };
     /**
+     * 关闭弹窗
+     */
+    const closeDialog = val => {
+      // val为子组件传回来的参数
+      console.log(val);
+      dialog_info.value = val;
+      // root.ccc({
+      //   id: 100,
+      //   text: "test"
+      // });
+    };
+
+    /**
      * 删除数据
      */
     const deleteItem = id => {
@@ -295,6 +312,7 @@ export default {
       let categoryData = options.category.filter(
         item => item.id == categoryId
       )[0];
+      console.log(categoryData);
       return categoryData.category_name;
     };
 
@@ -336,7 +354,8 @@ export default {
       toCategory,
       handleSelectionChange,
       getList,
-      editInfo
+      editInfo,
+      closeDialog
     };
   }
 };

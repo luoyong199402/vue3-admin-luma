@@ -31,30 +31,30 @@
   </div>
 </template>
 <script>
-import { reactive, computed } from '@vue/composition-api'
+import { reactive, computed } from "@vue/composition-api";
 export default {
   // compiler
-  name: 'navMenu',
+  name: "navMenu",
   setup(props, { root }) {
     /**
      * data 数据
      */
-    const routers = reactive(root.$router.options.routes)
+    const routers = reactive(root.$router.options.routes);
     /**
      * computed 监听
      */
     const isCollapse = computed(() => {
-      return root.$store.state.app.isCollapse
-    })
+      return root.$store.state.app.isCollapse;
+    });
     return {
       isCollapse,
       routers
-    }
+    };
   }
-}
+};
 </script>
 <style lang="scss" scoped>
-@import '../../../styles/config.scss';
+@import "../../../styles/config.scss";
 .logo {
   text-align: center;
   img {

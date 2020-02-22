@@ -107,7 +107,7 @@
 <script>
 import {
   AddFristCategory,
-  GetCategory,
+  GetCategory as Api_GetCategory,
   DeleteCategory,
   EditCategory,
   AddChildrenCategory
@@ -115,12 +115,13 @@ import {
 import { reactive, ref, onMounted, watch } from "@vue/composition-api";
 import { global } from "@/utils/global_V3.0";
 import { common } from "@/api/common";
+// import { getInfoCategory } from "@/store/index.js";
 export default {
   name: "category",
   setup(props, { root, refs }) {
     // global
     const { confirm } = global();
-    const { getInfoCategory, getInfoCategoryAll, categoryItem } = common();
+    // const { getInfoCategory, getInfoCategoryAll, categoryItem } = common();
     /**
      * reactive
      */
@@ -248,6 +249,7 @@ export default {
         tip: "警告",
         fn: deleteCategory,
         catchFn: () => {
+          console.log("取消");
           deleteId.value = "";
         }
       });
@@ -307,27 +309,41 @@ export default {
           type: "success"
         });
         category.current.category_name = responseData.data.data.categoryName;
+        // getInfoCategoryAll();
         // 清空输入框
         form.categoryName = "";
         category.current = [];
       });
     };
     /**
+     * 获取分类列表
+     */
+    const GetCategory = () => {
+      root.$store.dispatch("common/getInfoCategory").then(response => {
+        console.log(response);
+        category.item = response;
+      });
+    };
+
+    /**
      * 生命周期
      */
     // 挂载完成时执行，（页面DOM元素完成时，实例完成）
     onMounted(() => {
-      getInfoCategoryAll();
+      // getInfoCategoryAll();
+      GetCategory();
     });
     /**
      * watch
      */
-    watch(
-      () => categoryItem.item,
-      value => {
-        category.item = value;
-      }
-    );
+    // watch(
+    //   () => categoryItem.item,
+    //   value => {
+    //     console.log(111);
+    //     console.log(value);
+    //     category.item = value;
+    //   }
+    // );
 
     return {
       // ref

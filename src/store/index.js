@@ -7,9 +7,9 @@ import login from "./modules/login";
 import common from "./modules/common";
 
 export default new Vuex.Store({
-    modules: {
-        app,
-        login,
-        common
-    }
+  modules: {
+    app,
+    login,
+    common
+  }
 });
